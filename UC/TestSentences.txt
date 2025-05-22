@@ -1,0 +1,2 @@
+I will be testing a few sentences to see their embeddings. Blah Blah Blah. This will be more testing to see if it gives a similar embedding.
+I like writing stuff that will be turned into numbers.
