@@ -46,7 +46,7 @@ def getSentences(filename):
                 cleanChunk = cleanChunk.replace('\u2018', '\'')
                 
                 # Remove the newlines
-                cleanChunk = cleanChunk.replace('\n', '')
+                cleanChunk = cleanChunk.replace('\n', ' ')
                 # And finally, this section can be concatenated to the clean text
                 cleanText += cleanChunk
         
@@ -80,7 +80,7 @@ def getSentences(filename):
                 # Add the sentence to the vector
                 sentences.append(sentence)
                 # Remove the sentence from the text
-                index = match.end() + 1
+                index = match.end()
                 cleanText = cleanText[index:]
                 
                 # Loop through each sentence
@@ -117,7 +117,7 @@ def main():
     print("Starting Code")
     
     # Get the sentences from the texts (only tested for Matthew and Mark, but it should work for all of GA)
-    sentences = getSentences("Mark(NRSV).txt") # Switch this to point to the text you want
+    sentences = getSentences("Matthew(NRSV).txt") # Switch this to point to the text you want
     
     # Load the model
     model = SentenceTransformer("all-MiniLM-L6-v2")
