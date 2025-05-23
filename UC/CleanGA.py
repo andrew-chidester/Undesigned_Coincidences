@@ -194,9 +194,9 @@ def main():
     print("Starting Code")
     
     # Switch this to book
-    bookName = "Acts"
+    book = "Acts"
     
-    fileName = f"CleanTexts/FullTexts/{bookName}(NRSV).txt" 
+    fileName = f"CleanTexts/FullTexts/{book}(NRSV).txt" 
     
     # Create the dictionary of the verses
     verseDict = getVerses(fileName) 
@@ -209,7 +209,7 @@ def main():
     }
     
     # The json it is stored as
-    with open(f"CleanTexts/{bookName}Clean.json", 'w') as jsonFile:
+    with open(f"CleanTexts/{book}Clean.json", 'w') as jsonFile:
         json.dump(data, jsonFile)
     
     print("Finished Code")
