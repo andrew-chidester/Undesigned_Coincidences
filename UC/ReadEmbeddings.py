@@ -18,34 +18,46 @@ def main():
     embeddings = []
     sentences = []
     
-    # Get the embeddings and stuff from Matthew (change this to your json)
-    with open("MatthewEmbedding.json", 'r') as jsonFile:
+    book1 = "Acts"
+    book2 = "Luke"
+
+    
+    # Get the embeddings and stuff from first book
+    with open(f"Embeddings/{book1}Verses.json", 'r') as jsonFile:
         data = json.load(jsonFile)
-        matt = len(data["embeddings"])
-        print(matt)
+        bookLength1 = len(data["embeddings"])
+        print(bookLength1)
         embeddings += data["embeddings"]
-        sentences += data["sentences"]
-     
-    # Get the embeddings and stuff from Mark (change this to your json)
+        sentences += data["text"]
+    
+    # Get the embeddings and stuff from second book
     # I just concatenate the vectors since the similarity function takes a single vector input    
-    with open("MarkEmbedding.json", 'r') as jsonFile:
+    with open(f"Embeddings/{book2}Verses.json", 'r') as jsonFile:
         data = json.load(jsonFile)
-        mark = len(data["embeddings"])
-        print(mark)
+        bookLength2 = len(data["embeddings"])
+        print(bookLength2)
         embeddings += data["embeddings"]
-        sentences += data["sentences"]
+        sentences += data["text"]
     
     # Use SBERT's built in similarity function
     # This creates a matrix  
     similarities = model.similarity(embeddings, embeddings)
     #print(similarities)
     
-    # Go through the section of the matrix that is matthew compared to mark
-    for i in range(matt):
-        for j in range(matt, matt + mark):
+
+    # Getting the verses (comment out if you are just doing sentences)
+    with open(f"CleanTexts/{book1}Clean.json", 'r') as jsonFile:
+        book1Dict = json.load(jsonFile)["verses"]
+    with open(f"CleanTexts/{book2}Clean.json", 'r') as jsonFile:
+        book2Dict = json.load(jsonFile)["verses"]
+    
+
+    # Go through the section of the matrix that is comparing the two books
+    for i in range(bookLength1):
+        for j in range(bookLength1, bookLength1 + bookLength2):
             if similarities[i][j] > 0.85: # This value can be changed to filter different similarity levels
                 print(f"i:{i}\tj:{j}\tval:{similarities[i][j]}\n")
-                print(f"{sentences[i]}\n\n{sentences[j]}\n\n")
+                print(f"{book1} {book1Dict[sentences[i]]} - {sentences[i]}\n\n{book2} {book2Dict[sentences[j]]} - {sentences[j]}\n\n")
 
                 
     # # Creates the heatmap graph thing, which can be kind of cool, but not needed so it's commented out
